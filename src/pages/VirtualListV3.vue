@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <div class="he">头部</div>
     <div class="con">
       <div ref="list" class="infinite-list-container" @scroll="scrollEvent">
         <div
@@ -13,17 +12,16 @@
             class="infinite-list-item"
             v-for="item in visibleData"
             :key="item.id"
-            :style="{
+          >
+            <!-- :style="{
               height: pageData.itemSize + 'px',
               lineHeight: pageData.itemSize + 'px',
-            }"
-          >
+            }" -->
             {{ item.value }}
           </div>
         </div>
       </div>
     </div>
-    <div class="foot">底部</div>
   </div>
 </template>
 
@@ -40,7 +38,7 @@ let pageData = reactive({
   start: 0,
   //结束索引
   end: 10,
-  itemSize: 20,
+  itemSize: 80,
 });
 let now = Date.now();
 // 插入一万条数据
@@ -74,14 +72,15 @@ for (let i = 0; i < total; i++) {
     value: i,
   });
 }
-onMounted(() => {
-  pageData.screenHeight = list.value.clientHeight;
-  console.log(
-    "%c [ list.value ]-99-「demo1」",
 
-    "font-size:13px; background:#28f358; color:#6cff9c;",
-    list.value
-  );
+const list = ref();
+const items = ref();
+const loading = ref(false);
+
+onMounted(() => {
+  pageData.itemSize = items.value[0].clientHeight || 80;
+
+  pageData.screenHeight = list.value.clientHeight;
   pageData.start = 0;
   pageData.end = pageData.start + visibleCount.value;
 });
@@ -89,8 +88,6 @@ console.log("JS运行时间：", Date.now() - now);
 setTimeout(() => {
   console.log("总运行时间：", Date.now() - now);
 }, 0);
-const list = ref();
-const items = ref();
 const scrollEvent = () => {
   //当前滚动位置
   let scrollTop = list.value.scrollTop;
@@ -123,12 +120,6 @@ const scrollEvent = () => {
 .con {
   overflow: auto;
   flex: 1;
-}
-.demo {
-  height: 20px;
-}
-.demo:nth-child(odd) {
-  background: #666;
 }
 
 .infinite-list-container {

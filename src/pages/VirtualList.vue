@@ -10,8 +10,9 @@
         class="infinite-list-item"
         v-for="item in visibleData"
         :key="item.id"
-        :style="{ height: itemSize + 'px', lineHeight: itemSize + 'px' }"
       >
+        :style="{ height: itemSize + 'px', lineHeight: itemSize + 'px' }"
+
         {{ item.value }}
       </div>
     </div>
@@ -55,6 +56,7 @@ export default {
     },
   },
   mounted() {
+    pageData.itemSize = this.$refs.items[0].clientHeight || 80;
     this.screenHeight = this.$el.clientHeight;
     this.start = 0;
     this.end = this.start + this.visibleCount;
