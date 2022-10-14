@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "plug": "vue-cli-service build --target lib --name domTest --dest lib src/components/com/index.js"
   },
   "dependencies": {
     "vue": "^3.2.37"
